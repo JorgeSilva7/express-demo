@@ -2,6 +2,7 @@ import express from "express";
 import reviewsRouter from "./src/routes/review.router.js";
 import productsRouter from "./src/routes/product.router.js";
 import { PORT } from "./src/configs/environment.js";
+import connectDB from "./src/configs/mongo.js";
 
 const app = express();
 
@@ -14,6 +15,15 @@ app.get("/", function (req, res) {
 	res.send("<h1>Hola mundo</h1>");
 });
 
-app.listen(PORT, () => {
-	console.log(`Server started on ${PORT}`);
-});
+async function startSever() {
+	const isConnected = await connectDB();
+	if (isConnected) {
+		app.listen(PORT, () => {
+			console.log(`Server started on ${PORT}`);
+		});
+	} else {
+		process.exit();
+	}
+}
+
+startSever();
