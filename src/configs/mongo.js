@@ -20,4 +20,7 @@ export default function connectDB() {
  */
 async function registerModels() {
 	await import("../models/product.model.js");
+	await import("../models/address.model.js");
+	await import("../models/job.model.js");
+	await import("../models/user.model.js");
 }
