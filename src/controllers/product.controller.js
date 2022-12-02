@@ -57,6 +57,20 @@ async function createProductV3(req, res) {
 		});
 }
 
+export async function deleteProduct(req, res){
+	const productId = req.params.id;
+
+	const product = await Product.findById(productId);
+
+	if (!product){
+		return res.status(404).send({error: "No encontrado"})
+	}
+
+	await product.delete();
+
+	return res.status(204).send();
+}
+
 export {
 	getProducts,
 	getProduct,
@@ -64,4 +78,5 @@ export {
 	createProductV1,
 	createProductV2,
 	createProductV3,
+	
 };
